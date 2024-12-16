@@ -1,3 +1,100 @@
+/* Reset general de márgenes y rellenos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body centrado con flexbox, asegurando que ocupe toda la pantalla */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #ffffff; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding-top: 120px; /* Da espacio para el header fijo */
+  min-height: 100vh; 
+}
+
+/* Estilos del header */
+.header {
+  background-color: #1B4965;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;  /* Alinea los logos y el menú en columna */
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  height: auto;
+  /* El color de fondo es aplicado directamente al header */
+}
+
+/* Contenedor de los logos */
+.logos-container {
+  display: flex;
+  gap: 20px; 
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 10px; /* Espacio entre los logos y el menú */
+}
+
+/* Estilo para los logos */
+.logo {
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Estilo específico para el logo de Debts Stop */
+.logo-debts-stop {
+  width: 150px;
+}
+
+/* Estilo para la barra de navegación */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+}
+
+/* Botones de navegación */
+.navBtn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #fff;  /* Color de texto blanco */
+  padding: 10px 20px;
+  transition: all 0.3s ease;  /* Transición suave para los efectos */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Efecto de hover en los botones */
+.navBtn:hover {
+  background-color: #003e64;  /* Fondo naranja suave al pasar el ratón */
+  transform: scale(1.1);  /* Aumenta el tamaño del botón un 10% */
+}
+
+/* Efecto al dar foco */
+.navBtn:focus {
+  outline: none;  /* Remueve el borde por defecto */
+  box-shadow: 0 0 5px rgba(255, 112, 67, 0.7);  /* Añade un pequeño resplandor */
+}
+/*----CHAT BOT----*/
 /* Botón flotante */
 #floating-btn {
     position: fixed;
