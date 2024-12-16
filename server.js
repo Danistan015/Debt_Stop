@@ -1,18 +1,18 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const fetch = require('node-fetch');  // Asegúrate de instalar 'node-fetch' con `npm install node-fetch`
+const fetch = require('node-fetch'); 
 
 const app = express();
 const port = 3000;
 
-// Middleware para parsear el cuerpo de la solicitud
+// Middleware para parsear los datos en el cuerpo de la solicitud
 app.use(bodyParser.json());
 
-// Servir los archivos estáticos desde la carpeta 'public'
+// Servir los archivos estáticos (CSS, imágenes, etc.) desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ruta para servir el archivo 'index.html'
+// Ruta principal para servir el archivo 'index.html'
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -21,40 +21,35 @@ app.get('/', (req, res) => {
 app.post('/chat', (req, res) => {
   const userMessage = req.body.message;
 
-  // Llamar a la API de Gemini con el mensaje del usuario
-  llamarGemini(userMessage)
+  // Llamar a la función para interactuar con la API de Gemini
+  obtenerRespuestaGemini(userMessage)
     .then(reply => {
-      res.json({ reply: reply });
+      res.json({ reply });
     })
     .catch(error => {
       console.error('Error al generar respuesta con Gemini:', error);
-      res.json({ reply: 'Lo siento, algo salió mal al procesar tu solicitud.' });
+      res.json({ reply: 'Lo siento, algo salió mal. ¿Puedes intentar de nuevo?' });
     });
 });
 
-// Función para interactuar con la API de Gemini y obtener una respuesta generada
-function llamarGemini(prompt) {
-  // Verifica si el mensaje contiene palabras clave problemáticas
+// Función para interactuar con la API de Gemini y obtener una respuesta
+function obtenerRespuestaGemini(prompt) {
+  // Si el mensaje contiene una palabra clave problemática
   if (prompt.toLowerCase().includes("mal")) {
-    return Promise.resolve("Parece que algo no va bien. ¿Puedes decirme más sobre lo que te pasa?");
+    return Promise.resolve("Parece que algo no va bien. ¿Puedes contarme más sobre lo que te sucede?");
   }
 
-  const API_KEY = 'AIzaSyDtJ92vkvx9n4MZ37IJ3Ldjb9raKv0T8Mg';
+  const API_KEY = 'AIzaSyAudv2T3R9W2DQkIxpqY-5UkGLFFdJJEcE';  // Asegúrate de poner tu clave de API correcta
   const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
+  // Hacer la solicitud a la API de Gemini
   return fetch(URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            { text: prompt }
-          ]
-        }
-      ]
+      contents: [{ parts: [{ text: prompt }] }]
     })
   })
     .then(response => response.json())
@@ -64,12 +59,13 @@ function llamarGemini(prompt) {
     })
     .catch(error => {
       console.error('Error al llamar a la API de Gemini:', error);
-      throw new Error('Error al llamar a la API');
+      throw new Error('Hubo un problema al procesar tu solicitud');
     });
 }
 
+// Ruta para servir el archivo de estilos 'styles.css'
 app.get('/styles.css', (req, res) => {
-  res.type('css'); // Asegura que el tipo MIME sea 'text/css'
+  res.type('css');  // Asegura que el tipo MIME sea 'text/css'
   res.sendFile(path.join(__dirname, 'public', 'styles.css'));
 });
 
