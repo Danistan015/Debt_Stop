@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-/* Body centrado con flexbox, asegurando que ocupe toda la pantalla */
+/* Body centrado con flexbox, asegurando que ocupe toda la pantalla,  */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@ body {
   display: flex; 
   justify-content: center; 
   align-items: center; 
-  padding-top: 120px; /* Da espacio para el header fijo */
+  padding-top: 120px; 
   min-height: 100vh; 
 }
 
@@ -23,7 +23,7 @@ body {
   padding: 10px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;  /* Alinea los logos y el menú en columna */
+  flex-direction: column; 
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -32,7 +32,6 @@ body {
   width: 100%;
   z-index: 10;
   height: auto;
-  /* El color de fondo es aplicado directamente al header */
 }
 
 /* Contenedor de los logos */
@@ -94,6 +93,7 @@ nav ul li {
   outline: none;  /* Remueve el borde por defecto */
   box-shadow: 0 0 5px rgba(255, 112, 67, 0.7);  /* Añade un pequeño resplandor */
 }
+
 /*----CHAT BOT----*/
 /* Botón flotante */
 #floating-btn {
@@ -184,3 +184,31 @@ nav ul li {
     background-color: #0056b3;
   }
   
+/*----FOOTER----*/
+/*Cambiamos el estilo del footer haciendo que el texto sea blanco y tenga el mismo color de fondo que el header, centramos el texto, 
+fijamos el footer en la parte inferior y nos aseguramos que ocupe todo el ancho */
+footer {
+  background-color: #1B4965; 
+  color: #ffffff;
+  padding: 10px 0; 
+  text-align: center; 
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%; 
+}
+
+/* Cambiamos el estilo para los enlaces que se encuentran dentro del footer, les damos una letra blanca y le quitamos el subrayado que tiene por defecto
+Aumentamos el tamaño y le ponemos negrilla*/
+footer a {
+  color: #ffffff;
+  text-decoration: none; 
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+/*Aumentamos el tamaño y el espacio del icon de github*/
+footer a i {
+  margin-right: 8px;
+  font-size: 20px;
+}
