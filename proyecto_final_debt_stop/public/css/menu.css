@@ -16,14 +16,12 @@ body {
   padding-top: 120px; 
   min-height: 100vh; 
 }
-
 /* Estilos del header */
 .header {
   background-color: #1B4965;
   padding: 10px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; 
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -34,20 +32,27 @@ body {
   height: auto;
 }
 
+/* Contenedor de todo el contenido del header */
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 /* Contenedor de los logos */
 .logos-container {
   display: flex;
   gap: 20px; 
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 100%;
   margin-bottom: 10px; /* Espacio entre los logos y el menú */
 }
 
 /* Estilo para los logos */
 .logo {
-  width: 200px;
+  width: 150px;
   height: auto;
   object-fit: contain;
 }
@@ -57,7 +62,7 @@ body {
   width: 150px;
 }
 
-/* Estilo para la barra de navegación */
+/* Barra de navegación */
 nav ul {
   list-style: none;
   display: flex;
@@ -66,12 +71,10 @@ nav ul {
   padding: 0;
 }
 
-nav ul li {
-  display: inline-block;
-}
-
 /* Botones de navegación */
 .navBtn {
+  display: flex;
+  align-items: center;
   background: none;
   border: none;
   font-size: 1.2em;
@@ -82,9 +85,16 @@ nav ul li {
   border-radius: 5px; /* Bordes redondeados */
 }
 
+/* Iconos dentro de los botones */
+.navBtn .navIcon {
+  width: 20px; /* Tamaño del icono */
+  height: 20px;
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+
 /* Efecto de hover en los botones */
 .navBtn:hover {
-  background-color: #003e64;  /* Fondo naranja suave al pasar el ratón */
+  background-color: #003e64;  /* Fondo cuando se pasa el ratón */
   transform: scale(1.1);  /* Aumenta el tamaño del botón un 10% */
 }
 
@@ -93,6 +103,7 @@ nav ul li {
   outline: none;  /* Remueve el borde por defecto */
   box-shadow: 0 0 5px rgba(255, 112, 67, 0.7);  /* Añade un pequeño resplandor */
 }
+
 
 /*----CHAT BOT----*/
 /* Botón flotante */
