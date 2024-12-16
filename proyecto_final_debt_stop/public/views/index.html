@@ -4,29 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> 
     <title>Login</title>
 </head>
 <body>
-    <header>
-        <div class="logos">
-            <img src="../images/vankLogo.jpeg" alt="">
+    <header class="header">
+        <div class="logos-container">
+            <img src="../images/vank_blanco.png" alt="Logo Vank" class="logo logo-vank">
+            <img src="../images/debts_stop_logo.png" alt="Logo Debts Stop" class="logo logo-debts-stop">
         </div>
-    </header>
+    </header>    
     <div class="login-container">
         <form class="login-form">
-            <label for="user" class="user">User</label>
-            <input type="text" name="user" id="user">
-            
-            <label for="password" class="password">Password</label>
-            <input type="text" name="password" id="password">
+            <label for="user" class="label">User</label>
+            <input type="text" name="user" id="user" class="input">
 
-            <button class="btn_login">Login</button>
-            <a href="#" class="footer-link-github">New user? clic here!</a>
+            <label for="password" class="label">Password</label>
+            <input type="password" name="password" id="password" class="input">
+
+            <button type="button" class="btn-login">Login</button>
+            <a href="#" class="new-user-link">New user? Click here!</a> 
         </form>
     </div>
     <footer>
-        <a href="#">Github</a>
+        <a href="https://github.com/Danistan015/Debt_Stop" target="_blank">
+            <i class="fab fa-github"></i> Github
+        </a>
     </footer>
+    
     <script src="../js/login.js"></script>
 </body>
 </html>

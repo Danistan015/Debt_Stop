@@ -1,0 +1,159 @@
+/*Reset a margin y padding en general*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*Se centra todo el contenido, activamos el flex y centramos horizontal y verticalemtne, con el min-height nos aseguramos que ocupe toda la pantalla*/
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffffff; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding-top: 120px; /* Da espacio para el header fijo */
+    min-height: 100vh; 
+}
+
+
+/*---- HEADER ----*/
+/*Cambiamos el estilo del header dandole un fondo azul, centrandolo y asegurandonos que ocupe todo el espacio, y ajustando la altura */
+.header {
+    background-color: #1B4965;
+    padding: 10px 0;   
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Para que esté por encima de otros elementos */
+    height: auto; 
+}
+
+/*Cambiamos el contenedor de los logos centrandolos*/
+.logos-container {
+    display: flex;
+    gap: 20px;         
+    justify-content: center;  
+    align-items: center;     
+    width: auto;            
+    max-width: 100%;
+}
+
+/*Estilo para ambos logos, fijamos el tamaño a 100px y conservamos la proporción de la imagen*/
+.logo {
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+
+.logo-debts-stop{
+    width: 150px;
+
+}
+
+/*----LOGIN----*/
+/*Mejoramos el cajón del login dándole un padding, asignandole bordes y sombras, centrando todo internamente y limitando el ancho*/
+.login-container {
+    background: #ffffff; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    width: 100%;
+    max-width: 350px; 
+    text-align: center; 
+}
+
+/*Ordenamos el formulario alineando textos y dando espacio entre los elementos*/
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    text-align: left; 
+}
+
+/*Mejoramos el diseño de los textos*/
+.label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333; 
+}
+/*----CAMPOS LOGIN----*/
+/* Mejoramos el diseño de los campos de texto agregando un borde gris y redondeandolo, eliminando el borde azul por defecto al dar clic en el campo y dandole
+un fondo gris al campo*/
+.input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none; 
+    background: #f9f9f9;
+}
+
+/*Cambiamos el efecto al dar clic en el campo por un borde morado*/
+.input:focus {
+    border-color: #1B4965; 
+    background: #ffffff; 
+}
+/*----BOTÓN LOGIN----*/
+/*Cambiamos el estilo del botón dandole un color, redordeando los bordes, y haciendo que la mano del mouse cambie al pasar sobre el botón */
+.btn-login {
+    padding: 10px;
+    background: #1B4965; 
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer; 
+}
+
+/* Cambiar el efecto al pasar el mouse sobre el botón para que se vea un morado más oscuro*/
+.btn-login:hover {
+    background: #0d3d5e; 
+}
+
+/*----NUEVOS USUARIOS LOGIN----*/
+/* Cambiamos el enlace para nuevos usuarios centrandolo bajo el botón, asignandole un nuevo color y aumentando el tamaño del texto un poco*/
+.new-user-link {
+    margin-top: 10px; 
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+    color: #1B4965;
+    text-decoration: none; 
+}
+
+/*----FOOTER----*/
+/*Cambiamos el estilo del footer haciendo que el texto sea blanco y tenga el mismo color de fondo que el header, centramos el texto, 
+fijamos el footer en la parte inferior y nos aseguramos que ocupe todo el ancho */
+footer {
+    background-color: #1B4965; 
+    color: #ffffff;
+    padding: 10px 0; 
+    text-align: center; 
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; 
+}
+
+/* Cambiamos el estilo para los enlaces que se encuentran dentro del footer, les damos una letra blanca y le quitamos el subrayado que tiene por defecto
+Aumentamos el tamaño y le ponemos negrilla*/
+footer a {
+    color: #ffffff;
+    text-decoration: none; 
+    font-size: 16px;
+    font-weight: bold; 
+}
+
+/*Aumentamos el tamaño y el espacio del icon de github*/
+footer a i {
+    margin-right: 8px;
+    font-size: 20px;
+}
