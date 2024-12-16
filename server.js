@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const fetch = require('node-fetch'); 
+const fetch = require('node-fetch');
 
 const app = express();
 const port = 3000;
@@ -9,13 +9,14 @@ const port = 3000;
 // Middleware para parsear los datos en el cuerpo de la solicitud
 app.use(bodyParser.json());
 
-// Servir los archivos estáticos (CSS, imágenes, etc.) desde la carpeta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+// Sirve los archivos estáticos desde la carpeta 'proyecto_final_debt_stop/public'
+app.use(express.static(path.join(__dirname, 'proyecto_final_debt_stop', 'public')));
 
-// Ruta principal para servir el archivo 'index.html'
+// Cambia la ruta para servir 'menu.html'
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'proyecto_final_debt_stop', 'public', 'views', 'menu.html'));
 });
+
 
 // Ruta para manejar las interacciones del chatbot
 app.post('/chat', (req, res) => {
@@ -62,12 +63,6 @@ function obtenerRespuestaGemini(prompt) {
       throw new Error('Hubo un problema al procesar tu solicitud');
     });
 }
-
-// Ruta para servir el archivo de estilos 'styles.css'
-app.get('/styles.css', (req, res) => {
-  res.type('css');  // Asegura que el tipo MIME sea 'text/css'
-  res.sendFile(path.join(__dirname, 'public', 'styles.css'));
-});
 
 // Iniciar el servidor
 app.listen(port, () => {
