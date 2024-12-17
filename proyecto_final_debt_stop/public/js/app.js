@@ -295,7 +295,7 @@ class Proyecto {
           <p style="font-size: 24px;">$${totalPaid.toFixed(2)}</p>
         </div>
         
-        <div class="balance-card" style="padding: 20px; border-radius: 8px; background-color: #FF5722; color: white; width: 300px; text-align: center;">
+        <div class="balance-card" style="padding: 20px; border-radius: 8px; background-color: #c1121f; color: white; width: 300px; text-align: center;">
           <h2>Total Pending</h2>
           <p style="font-size: 24px;">$${totalPending.toFixed(2)}</p>
         </div>
