@@ -63,3 +63,79 @@ userMessageInput.addEventListener('keydown', function(event) {
     sendMessageButton.click();
   }
 });
+
+/*----NAVEGACIÓN----*/
+class Proyecto{
+  constructor(){
+    this.app = document.getElementById('app');
+    this.navButtons = document.querySelectorAll('.navBtn');
+    
+    this.initEventListeners();
+
+  }
+
+  initEventListeners() {
+    this.navButtons.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            const view = event.target.dataset.view;
+            this.navigateTo(view);
+        });
+    });
+  }
+
+  navigateTo(view) {
+    switch(view) {
+        case "add-debts":
+            this.renderAddDebts();
+            break;
+        case "history":
+            this.renderHistory();
+            break;
+        case "notifications":
+            this.renderNotifications();
+            break;
+        case "total-balance":
+            this.renderTotalBalance();
+            break;
+        case "my-goals":
+          this.renderMyGoals();
+          break;
+        case "about-us":
+          this.renderAboutUs();
+          break;        
+        
+    }
+  }
+
+  renderAddDebts() {
+    this.app.innerHTML = `
+    <h2>VISTA DE ADD DEBTS</h2>
+    `;
+  }
+
+  renderHistory() {
+    this.app.innerHTML = `
+    <h2>VISTA DE HISTORY</h2>
+    `;
+  }
+
+  renderNotifications(){
+    this.app.innerHTML = `
+    <h1>FOKIN DANIELAAA</h1>
+    `;
+  }
+
+  renderTotalBalance(){
+
+  }
+
+  renderMyGoals(){
+
+  }
+
+  renderAboutUs(){
+
+  }
+}
+
+new Proyecto();
