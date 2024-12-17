@@ -11,7 +11,7 @@ floatingBtn.addEventListener("click", () => {
     chatContainer.style.display === "none" || chatContainer.style.display === ""
       ? "block"
       : "none";
-  userMessageInput.focus(); // Focalizar el campo de entrada de texto cuando se abre
+  userMessageInput.focus(); 
 });
 
 // Función para mostrar el mensaje del usuario
@@ -74,6 +74,7 @@ class Proyecto {
     this.navButtons = document.querySelectorAll(".navBtn");
 
     this.initEventListeners();
+    this.renderAddDebts();
   }
 
   initEventListeners() {
@@ -110,10 +111,8 @@ class Proyecto {
 
   //ADDD DBTS
   renderAddDebts() {
-    // Array to store debts
-    this.debts = this.debts || [];
-
-    // Render the interface
+    this.debts = JSON.parse(localStorage.getItem("debts")) || [];
+  
     this.app.innerHTML = `
       <h1>Debt Management</h1>
       <button type="button" class="btn btn-success" id="addDebtsBtn">Add Debt</button>
@@ -122,16 +121,12 @@ class Proyecto {
         <form id="debtForm">
           <label for="name">Name:</label>
           <input type="text" id="name" name="name" placeholder="Name" required />
-  
           <label for="amount">Amount:</label>
           <input type="number" id="amount" name="amount" placeholder="Amount" required />
-  
           <label for="dueDate">Due Date:</label>
           <input type="date" id="dueDate" name="dueDate" required />
-  
           <label for="description">Description:</label>
           <textarea id="description" name="description" placeholder="Description"></textarea>
-  
           <button type="submit" class="btn btn-primary">Save</button>
         </form>
       </div>
@@ -144,65 +139,83 @@ class Proyecto {
             <th>Amount</th>
             <th>Due Date</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="debtBody"></tbody>
       </table>
     `;
-
-    // DOM elements
+  
     const formSection = document.getElementById("form-section");
     const addDebtsBtn = document.getElementById("addDebtsBtn");
     const debtForm = document.getElementById("debtForm");
     const debtBody = document.getElementById("debtBody");
-
-    // Function to render the table
+  
     const renderTable = () => {
-      debtBody.innerHTML = ""; // Clear the table
+      debtBody.innerHTML = ""; // Limpiar la tabla
       this.debts.forEach((debt, index) => {
-        debtBody.innerHTML += `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${debt.name}</td>
-            <td>$${debt.amount}</td>
-            <td>${debt.dueDate}</td>
-            <td>${debt.description}</td>
-          </tr>
-        `;
+        if (debt.estado === "Pendiente") {
+          debtBody.innerHTML += `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${debt.name}</td>
+              <td>$${debt.amount}</td>
+              <td>${debt.dueDate}</td>
+              <td>${debt.description}</td>
+              <td class="actions-buttons"><button class="btn btn-success" data-index="${index}" id="markPaid">
+                <i class="fas fa-check-circle"></i> Mark as Paid
+              </button>
+              </td>
+            </tr>
+          `;
+        }
+      });
+  
+      // Event listeners para botones de acciones
+      document.querySelectorAll("#markPaid").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          const index = e.target.dataset.index;
+          this.debts[index].estado = "Pagada"; // Cambiar el estado
+          updateLocalStorage();
+          renderTable();
+        });
       });
     };
-
-    // Event to show/hide the form
+  
+    const updateLocalStorage = () => {
+      localStorage.setItem("debts", JSON.stringify(this.debts));
+    };
+  
+    // Evento para mostrar/ocultar el formulario
     addDebtsBtn.addEventListener("click", () => {
-      formSection.style.display =
-        formSection.style.display === "none" ? "block" : "none";
+      formSection.style.display = formSection.style.display === "none" ? "block" : "none";
     });
-
-    // Event to save the debt
+  
+    // Evento para guardar la deuda
     debtForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const name = document.getElementById("name").value;
       const amount = document.getElementById("amount").value;
       const dueDate = document.getElementById("dueDate").value;
       const description = document.getElementById("description").value;
-
-      // Add the debt to the array
-      this.debts.push({ name, amount, dueDate, description });
-      renderTable(); // Update the table
-      formSection.style.display = "none"; // Hide the form
-      debtForm.reset(); // Reset the form
+  
+      // Añadir la deuda con estado "Pendiente"
+      this.debts.push({ name, amount, dueDate, description, estado: "Pendiente" });
+      updateLocalStorage();
+  
+      renderTable();
+      formSection.style.display = "none";
+      debtForm.reset();
     });
-
-    renderTable(); // Initial render
-}
-
-
-  // hystoriiiiiiiiiiiiii
-
+  
+    renderTable();
+  }
+  
+  // historial hola daaan
   renderHistory() {
     this.app.innerHTML = `
-    <h1>History</h1>
-    
+      <h1>History</h1>
+      
       <table id="debtTable" class="styled-table">
         <thead>
           <tr>
@@ -211,59 +224,91 @@ class Proyecto {
             <th>Amount</th>
             <th>Date</th>
             <th>Description</th>
+            <th>Status</th> <!-- Nueva columna para el estado -->
           </tr>
         </thead>
         <tbody id="debtBody"></tbody>
       </table>
     `;
+  
+    const debtBody = document.getElementById("debtBody");
+    
+    // Renderiza todos los registros, tanto pendientes como pagados
+    this.debts.forEach((debt, index) => {
+      debtBody.innerHTML += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${debt.name}</td>
+          <td>$${debt.amount}</td>
+          <td>${debt.dueDate}</td>
+          <td>${debt.description}</td>
+          <td>${debt.estado}</td> <!-- Mostrar el estado de cada deuda -->
+        </tr>
+      `;
+    });
   }
-
+  
   renderNotifications() {
+    const today = new Date();
+    const fiveDaysLater = new Date();
+    fiveDaysLater.setDate(today.getDate() + 5); // Calcula la fecha de 5 días más
+  
+    // Filtra las deudas pendientes que vencen desde hoy hasta los próximos 5 días
+    const upcomingDebts = this.debts.filter(debt => {
+      const dueDate = new Date(debt.dueDate);
+      const isPending = debt.estado === "Pendiente"; // Asegura que solo se muestren deudas pendientes
+      return isPending && dueDate >= today && dueDate <= fiveDaysLater;
+    });
+  
+    // Genera el HTML para cada deuda pendiente que vence desde hoy hasta los próximos 5 días
     this.app.innerHTML = `
-    <h1>Notification</h1>
-    
-      <table id="debtTable" class="styled-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Notification</th>
-            <th>Date</th>
-           
-          </tr>
-        </thead>
-        <tbody id="debtBody"></tbody>
-      </table>
-    
+      <h1>Notifications</h1>
+      <div id="notification-container">
+        ${upcomingDebts.map(debt => {
+          const dueDate = new Date(debt.dueDate);
+          const daysLeft = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24)); // Calcula los días restantes
+          return `
+            <div class="notification" id="notificationDiv">
+              The debt "${debt.name}" is due in ${daysLeft === 0 ? "today" : daysLeft + " days"}.
+            </div>
+          `;
+        }).join('')}
+      </div>
     `;
-  }
-
+  };
+  
   renderTotalBalance() {
+    const totalPaid = this.debts
+      .filter(debt => debt.estado === "Pagada")
+      .reduce((sum, debt) => sum + parseFloat(debt.amount), 0);
+  
+    const totalPending = this.debts
+      .filter(debt => debt.estado === "Pendiente")
+      .reduce((sum, debt) => sum + parseFloat(debt.amount), 0);
+  
     this.app.innerHTML = `
-    <h1>Total Balance</h1>
-    
-      <table id="debtTable" class="styled-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Paid</th>
-            
-            <th>Debts</th>
-           
-          </tr>
-        </thead>
-        <tbody id="debtBody"></tbody>
-      </table>
-    
+      <h1>Total Balance</h1>
+      
+      <div id="balance-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+        <div class="balance-card" style="padding: 20px; border-radius: 8px; background-color: #4CAF50; color: white; width: 300px; text-align: center;">
+          <h2>Total Paid</h2>
+          <p style="font-size: 24px;">$${totalPaid.toFixed(2)}</p>
+        </div>
+        
+        <div class="balance-card" style="padding: 20px; border-radius: 8px; background-color: #FF5722; color: white; width: 300px; text-align: center;">
+          <h2>Total Pending</h2>
+          <p style="font-size: 24px;">$${totalPending.toFixed(2)}</p>
+        </div>
+      </div>
     `;
-  }
-
+  };
+  
   renderMyGoals() {
-    // Initial HTML structure with a form for adding goals
+    // Inicializar HTML con el formulario para agregar metas
     this.app.innerHTML = `
       <h1>My Goals</h1>
       <div id="goal-section">
         <form id="goalForm">
-    
           <input type="text" id="goal" name="goal" placeholder="Enter your goal" required />
           <button type="submit" class="btn btn-primary">Add Goal</button>
         </form>
@@ -280,16 +325,16 @@ class Proyecto {
       </table>
     `;
   
-    // DOM elements
+    // Elementos del DOM
     const goalForm = document.getElementById("goalForm");
     const goalBody = document.getElementById("goalBody");
     
-    // Array to store goals
-    this.goals = this.goals || [];
+    // Cargar las metas desde localStorage o inicializar un arreglo vacío
+    this.goals = JSON.parse(localStorage.getItem("goals")) || [];
   
-    // Function to render the table with goals
+    // Función para renderizar la tabla con las metas
     const renderGoalsTable = () => {
-      goalBody.innerHTML = ""; // Clear the table
+      goalBody.innerHTML = ""; // Limpiar la tabla
       this.goals.forEach((goal, index) => {
         goalBody.innerHTML += `
           <tr>
@@ -300,21 +345,21 @@ class Proyecto {
       });
     };
   
-    // Event to handle form submission and add a new goal
+    // Evento para manejar la sumisión del formulario y agregar una nueva meta
     goalForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const goal = document.getElementById("goal").value;
       if (goal) {
-        this.goals.push(goal); // Add the goal to the array
-        renderGoalsTable(); // Update the table
-        goalForm.reset(); // Reset the form
+        this.goals.push(goal); // Agregar la meta al arreglo
+        localStorage.setItem("goals", JSON.stringify(this.goals)); // Guardar en localStorage
+        renderGoalsTable(); // Volver a renderizar la tabla
+        goalForm.reset(); // Limpiar el formulario
       }
     });
   
-    renderGoalsTable(); // Initial render of the goals
+    renderGoalsTable(); // Renderizar las metas al cargar la página
   }
   
-
   renderAboutUs() {
     this.app.innerHTML = `
         <div class="about-us">
