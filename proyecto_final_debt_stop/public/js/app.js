@@ -348,7 +348,7 @@ class Proyecto {
     // Filtra las deudas pendientes que vencen desde hoy hasta los próximos 5 días
     const upcomingDebts = this.debts.filter(debt => {
       const dueDate = new Date(debt.dueDate);
-      const isPending = debt.estado === "Pendiente"; // Asegura que solo se muestren deudas pendientes
+      const isPending = debt.estado === "Pending"; // Asegura que solo se muestren deudas pendientes
       return isPending && dueDate >= today && dueDate <= fiveDaysLater;
     });
   
