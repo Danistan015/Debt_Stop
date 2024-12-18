@@ -337,9 +337,6 @@ class Proyecto {
     });
   }
   
-  
-  
-  
   renderNotifications() {
     const today = new Date();
     const fiveDaysLater = new Date();
@@ -418,7 +415,6 @@ class Proyecto {
     XLSX.writeFile(wb, "Total_Balance_Report.xlsx");
   }
   
-  
   renderMyGoals() {
     // Inicializar HTML con el formulario para agregar metas
     this.app.innerHTML = `
@@ -483,9 +479,7 @@ class Proyecto {
             <p>We are a dynamic team of passionate individuals who believe in the power of technology to solve real-world problems. We combine our skills and expertise to create innovative solutions that make a difference. We specialize in web and mobile app development, always seeking to learn more, improve our skills, and create solutions that are not only technically efficient but also user-friendly and impactful..</p>
         </div>
     `;
-}
-
-
+  }
 }
 
 new Proyecto();
