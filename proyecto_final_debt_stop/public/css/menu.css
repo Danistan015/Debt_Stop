@@ -334,7 +334,7 @@ form button:hover {
 #goal-section {
   width: 100%;
   max-width: 800px;
-  background-color: #CAE9FF;
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -375,7 +375,7 @@ form button:hover {
 
 /*about us*/
 .about-us {
-  background-color: #CAE9FF;
+  background-color: #fff;
   color: #333;
   font-family: 'Arial', sans-serif;
   padding: 40px;
@@ -434,4 +434,77 @@ form button:hover {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+/*Filtro*/
+/* Estilo para el contenedor del filtro */
+/* Estilo global para la fuente */
+body {
+  font-family: 'Roboto', sans-serif; /* Fuente moderna */
+}
+
+/* Estilos para las etiquetas de los filtros */
+label {
+  font-size: 18px;
+  font-weight: 600;  /* Fuente más fuerte para destacar */
+  margin-left: 100px; /* Ajustar para más proximidad */
+  color: #1B4965;
+  letter-spacing: 0.5px;  /* Espaciado entre letras para mayor claridad */
+}
+
+/* Estilos para el filtro de selección de estado */
+#statusFilter {
+  font-size: 16px;
+  padding: 8px 12px;  /* Espaciado interior para mayor comodidad */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: 'Roboto', sans-serif; /* Fuente para los selectores */
+}
+
+/* Estilos al pasar el ratón por encima */
+#statusFilter:hover {
+  border-color: #888;
+}
+
+#statusFilter:focus {
+  border-color: #555;
+  box-shadow: 0 0 5px rgba(85, 85, 85, 0.5);
+}
+
+/* Espaciado entre el filtro y la tabla */
+#statusFilter,
+label {
+  display: inline-block;
+  margin-bottom: 20px; /* Espaciado mayor */
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Estilos para los filtros de fecha */
+#dateFilter {
+  padding: 8px;
+  margin: 12px 0;
+  width: 220px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Estilo de los inputs de fecha */
+select, input[type="date"] {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Mejorar la accesibilidad y estética de los inputs */
+select:focus, input[type="date"]:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 4px rgba(0, 128, 0, 0.5);
 }

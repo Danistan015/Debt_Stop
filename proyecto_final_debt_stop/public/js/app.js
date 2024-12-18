@@ -154,7 +154,7 @@ class Proyecto {
     const renderTable = () => {
       debtBody.innerHTML = ""; // Limpiar la tabla
       this.debts.forEach((debt, index) => {
-        if (debt.estado === "Pendiente") {
+        if (debt.estado === "Pending") {
           debtBody.innerHTML += `
             <tr>
               <td>${index + 1}</td>
@@ -175,7 +175,7 @@ class Proyecto {
       document.querySelectorAll("#markPaid").forEach((button) => {
         button.addEventListener("click", (e) => {
           const index = e.target.dataset.index;
-          this.debts[index].estado = "Pagada"; // Cambiar el estado
+          this.debts[index].estado = "Paid"; // Cambiar el estado
           updateLocalStorage();
           renderTable();
         });
@@ -200,7 +200,7 @@ class Proyecto {
       const description = document.getElementById("description").value;
   
       // Añadir la deuda con estado "Pendiente"
-      this.debts.push({ name, amount, dueDate, description, estado: "Pendiente" });
+      this.debts.push({ name, amount, dueDate, description, estado: "Pending" });
       updateLocalStorage();
   
       renderTable();
@@ -215,7 +215,31 @@ class Proyecto {
   renderHistory() {
     this.app.innerHTML = `
       <h1>History</h1>
-      
+  
+      <!-- Filtro por estado -->
+      <label for="statusFilter">Filter by Status:</label>
+      <select id="statusFilter">
+        <option value="all">All</option>
+        <option value="Pending">Pending</option>
+        <option value="Paid">Paid</option>
+      </select>
+  
+      <!-- Filtro por rango de fechas -->
+      <label for="startDate">From:</label>
+      <input type="date" id="startDate" />
+  
+      <label for="endDate">To:</label>
+      <input type="date" id="endDate" />
+  
+      <!-- Opciones de ordenación -->
+      <label for="sortOrder">Sort by:</label>
+      <select id="sortOrder">
+        <option value="amountAsc">Amount (Low to High)</option>
+        <option value="amountDesc">Amount (High to Low)</option>
+        <option value="dateAsc">Date (Oldest First)</option>
+        <option value="dateDesc">Date (Newest First)</option>
+      </select>
+  
       <table id="debtTable" class="styled-table">
         <thead>
           <tr>
@@ -224,7 +248,7 @@ class Proyecto {
             <th>Amount</th>
             <th>Date</th>
             <th>Description</th>
-            <th>Status</th> <!-- Nueva columna para el estado -->
+            <th>Status</th>
           </tr>
         </thead>
         <tbody id="debtBody"></tbody>
@@ -232,21 +256,70 @@ class Proyecto {
     `;
   
     const debtBody = document.getElementById("debtBody");
-    
-    // Renderiza todos los registros, tanto pendientes como pagados
-    this.debts.forEach((debt, index) => {
-      debtBody.innerHTML += `
-        <tr>
-          <td>${index + 1}</td>
-          <td>${debt.name}</td>
-          <td>$${debt.amount}</td>
-          <td>${debt.dueDate}</td>
-          <td>${debt.description}</td>
-          <td>${debt.estado}</td> <!-- Mostrar el estado de cada deuda -->
-        </tr>
-      `;
-    });
+    const statusFilter = document.getElementById("statusFilter");
+    const startDateInput = document.getElementById("startDate");
+    const endDateInput = document.getElementById("endDate");
+    const sortOrderSelect = document.getElementById("sortOrder");
+  
+    // Función para renderizar las deudas filtradas
+    const renderFilteredDebts = () => {
+      const selectedStatus = statusFilter.value;
+      const startDate = startDateInput.value ? new Date(startDateInput.value) : null;
+      const endDate = endDateInput.value ? new Date(endDateInput.value) : null;
+      const sortOrder = sortOrderSelect.value;
+  
+      // Filtrar las deudas según estado y fecha
+      const filteredDebts = this.debts.filter(debt => {
+        const debtDate = new Date(debt.dueDate);
+        const inDateRange = (!startDate || debtDate >= startDate) && (!endDate || debtDate <= endDate);
+        const inStatus = selectedStatus === "all" || debt.estado === selectedStatus;
+  
+        return inDateRange && inStatus;
+      });
+  
+      // Ordenar las deudas según el criterio seleccionado
+      filteredDebts.sort((a, b) => {
+        switch (sortOrder) {
+          case "amountAsc":
+            return a.amount - b.amount;
+          case "amountDesc":
+            return b.amount - a.amount;
+          case "dateAsc":
+            return new Date(a.dueDate) - new Date(b.dueDate);
+          case "dateDesc":
+            return new Date(b.dueDate) - new Date(a.dueDate);
+          default:
+            return 0;
+        }
+      });
+  
+      // Limpiar el cuerpo de la tabla y renderizar deudas
+      debtBody.innerHTML = "";
+      filteredDebts.forEach((debt, index) => {
+        debtBody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${debt.name}</td>
+            <td>$${debt.amount}</td>
+            <td>${debt.dueDate}</td>
+            <td>${debt.description}</td>
+            <td>${debt.estado}</td>
+          </tr>
+        `;
+      });
+    };
+  
+    // Inicializar renderizado con todas las deudas
+    renderFilteredDebts();
+  
+    // Añadir eventos a los filtros
+    statusFilter.addEventListener("change", renderFilteredDebts);
+    startDateInput.addEventListener("change", renderFilteredDebts);
+    endDateInput.addEventListener("change", renderFilteredDebts);
+    sortOrderSelect.addEventListener("change", renderFilteredDebts);
   }
+  
+  
   
   renderNotifications() {
     const today = new Date();
@@ -279,11 +352,11 @@ class Proyecto {
   
   renderTotalBalance() {
     const totalPaid = this.debts
-      .filter(debt => debt.estado === "Pagada")
+      .filter(debt => debt.estado === "Paid")
       .reduce((sum, debt) => sum + parseFloat(debt.amount), 0);
   
     const totalPending = this.debts
-      .filter(debt => debt.estado === "Pendiente")
+      .filter(debt => debt.estado === "Pending")
       .reduce((sum, debt) => sum + parseFloat(debt.amount), 0);
   
     this.app.innerHTML = `
