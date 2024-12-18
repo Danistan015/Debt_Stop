@@ -215,34 +215,48 @@ class Proyecto {
   renderHistory() {
     this.app.innerHTML = `
       <h1>History</h1>
+    
+      <!-- Contenedor de filtros -->
+      <div id="filtersContainer">
+        <!-- Filtro por estado -->
+        <div>
+          <label for="statusFilter">Filter by Status:</label>
+          <select id="statusFilter">
+            <option value="all">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Paid">Paid</option>
+          </select>
+        </div>
   
-      <!-- Filtro por estado -->
-      <label for="statusFilter">Filter by Status:</label>
-      <select id="statusFilter">
-        <option value="all">All</option>
-        <option value="Pending">Pending</option>
-        <option value="Paid">Paid</option>
-      </select>
+        <!-- Filtro por rango de fechas -->
+        <div>
+          <label for="startDate">From:</label>
+          <input type="date" id="startDate" />
+        </div>
+        <div>
+          <label for="endDate">To:</label>
+          <input type="date" id="endDate" />
+        </div>
   
-      <!-- Filtro por rango de fechas -->
-      <label for="startDate">From:</label>
-      <input type="date" id="startDate" />
-  
-      <label for="endDate">To:</label>
-      <input type="date" id="endDate" />
-  
-      <!-- Opciones de ordenación -->
-      <label for="sortOrder">Sort by:</label>
-      <select id="sortOrder">
-        <option value="amountAsc">Amount (Low to High)</option>
-        <option value="amountDesc">Amount (High to Low)</option>
-        <option value="dateAsc">Date (Oldest First)</option>
-        <option value="dateDesc">Date (Newest First)</option>
-      </select>
-  
-      <!-- Botón para exportar a Excel -->
-      <button id="exportToExcel" style="margin-top: 20px;">Export to Excel</button>
-  
+        <!-- Opciones de ordenación -->
+        <div>
+          <label for="sortOrder">Sort by:</label>
+          <select id="sortOrder">
+            <option value="amountAsc">Amount (Low to High)</option>
+            <option value="amountDesc">Amount (High to Low)</option>
+            <option value="dateAsc">Date (Oldest First)</option>
+            <option value="dateDesc">Date (Newest First)</option>
+          </select>
+        </div>
+        
+          <!-- Botón para exportar a Excel -->
+      <button id="exportToExcel">Export to Excel</button>
+    
+        
+      </div>
+    
+      
+      <!-- Tabla -->
       <table id="debtTable" class="styled-table">
         <thead>
           <tr>
@@ -257,84 +271,6 @@ class Proyecto {
         <tbody id="debtBody"></tbody>
       </table>
     `;
-  
-    const debtBody = document.getElementById("debtBody");
-    const statusFilter = document.getElementById("statusFilter");
-    const startDateInput = document.getElementById("startDate");
-    const endDateInput = document.getElementById("endDate");
-    const sortOrderSelect = document.getElementById("sortOrder");
-    const exportToExcelButton = document.getElementById("exportToExcel");
-  
-    // Función para renderizar las deudas filtradas
-    const renderFilteredDebts = () => {
-      const selectedStatus = statusFilter.value;
-      const startDate = startDateInput.value ? new Date(startDateInput.value) : null;
-      const endDate = endDateInput.value ? new Date(endDateInput.value) : null;
-      const sortOrder = sortOrderSelect.value;
-  
-      // Filtrar las deudas según estado y fecha
-      const filteredDebts = this.debts.filter(debt => {
-        const debtDate = new Date(debt.dueDate);
-        const inDateRange = (!startDate || debtDate >= startDate) && (!endDate || debtDate <= endDate);
-        const inStatus = selectedStatus === "all" || debt.estado === selectedStatus;
-  
-        return inDateRange && inStatus;
-      });
-  
-      // Ordenar las deudas según el criterio seleccionado
-      filteredDebts.sort((a, b) => {
-        switch (sortOrder) {
-          case "amountAsc":
-            return a.amount - b.amount;
-          case "amountDesc":
-            return b.amount - a.amount;
-          case "dateAsc":
-            return new Date(a.dueDate) - new Date(b.dueDate);
-          case "dateDesc":
-            return new Date(b.dueDate) - new Date(a.dueDate);
-          default:
-            return 0;
-        }
-      });
-  
-      // Limpiar el cuerpo de la tabla y renderizar deudas
-      debtBody.innerHTML = "";
-      filteredDebts.forEach((debt, index) => {
-        debtBody.innerHTML += `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${debt.name}</td>
-            <td>$${debt.amount}</td>
-            <td>${debt.dueDate}</td>
-            <td>${debt.description}</td>
-            <td>${debt.estado}</td>
-          </tr>
-        `;
-      });
-    };
-  
-    // Inicializar renderizado con todas las deudas
-    renderFilteredDebts();
-  
-    // Añadir eventos a los filtros
-    statusFilter.addEventListener("change", renderFilteredDebts);
-    startDateInput.addEventListener("change", renderFilteredDebts);
-    endDateInput.addEventListener("change", renderFilteredDebts);
-    sortOrderSelect.addEventListener("change", renderFilteredDebts);
-  
-    // Función para exportar la tabla a Excel
-    exportToExcelButton.addEventListener("click", () => {
-      // Primero renderizamos las deudas filtradas
-      renderFilteredDebts();
-  
-      // Convertir la tabla a hoja de Excel usando SheetJS
-      const ws = XLSX.utils.table_to_sheet(document.getElementById('debtTable'));
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Debt History');
-      
-      // Guardar el archivo Excel
-      XLSX.writeFile(wb, 'debt_history.xlsx');
-    });
   }
   
   renderNotifications() {
@@ -430,7 +366,6 @@ class Proyecto {
         <thead>
           <tr>
             <th>#</th>
-            <th>Goal</th>
           </tr>
         </thead>
         <tbody id="goalBody"></tbody>

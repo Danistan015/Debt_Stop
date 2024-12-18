@@ -9,12 +9,13 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #BEE9E8;
+  background: #fff;
   padding-top: 200px;
   justify-content: center; 
   align-items: center; 
    
   min-height: 100vh; 
+  font-size: 16px;
 }
 /* Estilos del header */
 .header {
@@ -83,7 +84,7 @@ nav ul {
   padding: 10px 20px;
   transition: all 0.3s ease;  /* Transición suave para los efectos */
   border-radius: 5px; /* Bordes redondeados */
-  width: 160px;
+  width: 154px;
 }
 
 /* Iconos dentro de los botones */
@@ -230,6 +231,7 @@ footer a i {
 /* Encabezado */
 h1 {
   text-align: center;
+  padding-top: 50px;
   padding-bottom: 40px;
   color: #1B4965
   ;
@@ -241,7 +243,7 @@ button {
   color: white;
   border: none;
   padding: 10px 30px;
-  margin-left: 5%;
+  margin-left: 15%;
   display: flex;
   font-size: 16px;
   border-radius: 5px;
@@ -296,7 +298,7 @@ form button:hover {
 
 /* Estilos de la tabla */
 .styled-table {
-  width: 90%;
+  width: 70%;
   margin: 30px auto;
   border-collapse: collapse;
   font-size: 18px;
@@ -337,35 +339,35 @@ form button:hover {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
   margin-bottom: 30px;
   text-align: center;
-  margin-left: 29%;
+  margin-left: 27%;
 }
 
 /* Estilo para el formulario de agregar meta */
 #goalForm input {
-  width: 70%;
+  width: 75%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-bottom: 10px;
   font-size: 1em;
-  margin-left: 30px;
+  margin-left: 40px;
   margin-top: 5%;
 }
 
 #goalForm button {
   width: 13%;
   padding: 10px;
-  border-radius: 5px;
+  
   border: none;
   background-color: #1B4965;
   color: white;
   font-size: 1.1em;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-left: 43%;
+  margin-left: 47%;
   margin-top: 5%;
 }
 
@@ -435,80 +437,72 @@ form button:hover {
   margin-left: auto;
   margin-right: auto;
 }
-/*Filtro*/
-/* Estilo para el contenedor del filtro */
-/* Estilo global para la fuente */
-body {
-  font-family: 'Roboto', sans-serif; /* Fuente moderna */
+/* Estilo para el contenedor de los filtros */
+#filtersContainer {
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 15px; /* Espacio entre los elementos */
+  align-items: center; 
+  justify-content: space-between; /* Asegura que los elementos se distribuyan adecuadamente */
+  padding: 20px; 
+  background-color: #fff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* Centra horizontalmente el contenedor */
+  max-width: 90%; /* Limita el ancho máximo */
 }
 
-/* Estilos para las etiquetas de los filtros */
-label {
-  font-size: 18px;
-  font-weight: 600;  /* Fuente más fuerte para destacar */
-  margin-left: 100px; /* Ajustar para más proximidad */
-  color: #1B4965;
-  letter-spacing: 0.5px;  /* Espaciado entre letras para mayor claridad */
+/* Estilos para los filtros individuales */
+#filtersContainer > div {
+  display: flex;
+  flex-direction: column; /* Coloca la etiqueta encima del input o select */
+  min-width: 150px; /* Asegura un ancho mínimo para cada filtro */
+  flex: 1; /* Ajusta el tamaño de forma proporcional */
 }
 
-/* Estilos para el filtro de selección de estado */
-#statusFilter {
-  font-size: 16px;
-  padding: 8px 12px;  /* Espaciado interior para mayor comodidad */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  color: #333;
-  outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  font-family: 'Roboto', sans-serif; /* Fuente para los selectores */
+
+#exportToExcel2{
+  margin-left: 27%;
+ 
+}
+/* Botón al pasar el ratón por encima */
+#exportToExcel:hover {
+  background-color: #0056b3; /* Azul más oscuro */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilos al pasar el ratón por encima */
-#statusFilter:hover {
-  border-color: #888;
-}
-
-#statusFilter:focus {
-  border-color: #555;
-  box-shadow: 0 0 5px rgba(85, 85, 85, 0.5);
-}
-
-/* Espaciado entre el filtro y la tabla */
-#statusFilter,
-label {
-  display: inline-block;
-  margin-bottom: 20px; /* Espaciado mayor */
-  font-family: 'Roboto', sans-serif;
-}
-
-/* Estilos para los filtros de fecha */
-#dateFilter {
-  padding: 8px;
-  margin: 12px 0;
-  width: 220px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-}
-
-/* Estilo de los inputs de fecha */
+/* Mejora de los estilos de inputs y selects */
 select, input[type="date"] {
   padding: 8px;
-  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
-  font-family: 'Roboto', sans-serif;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Mejorar la accesibilidad y estética de los inputs */
 select:focus, input[type="date"]:focus {
   border-color: #4CAF50;
-  box-shadow: 0 0 4px rgba(0, 128, 0, 0.5);
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
-#exportToExcel2 {
-  margin-left: 30%;
-  
+
+/* Estilo para las etiquetas */
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1B4965;
+  margin-bottom: 5px;
+}
+
+/* Ajustes adicionales para el contenedor */
+@media (max-width: 768px) {
+  #filtersContainer {
+    flex-direction: column; /* Cambia a diseño vertical en pantallas pequeñas */
+  }
+
+  #exportToExcel {
+    width: 100%; /* Ocupa todo el ancho */
+    text-align: center;
+    margin-left: 45%;
+  }
 }
