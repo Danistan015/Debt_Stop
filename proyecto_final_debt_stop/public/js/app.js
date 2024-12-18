@@ -213,9 +213,11 @@ class Proyecto {
   
   // historial hola daaan
   renderHistory() {
+    this.debts = JSON.parse(localStorage.getItem("debts")) || []; // Cargar deudas de localStorage
+
     this.app.innerHTML = `
       <h1>History</h1>
-    
+      
       <!-- Contenedor de filtros -->
       <div id="filtersContainer">
         <!-- Filtro por estado -->
@@ -227,7 +229,7 @@ class Proyecto {
             <option value="Paid">Paid</option>
           </select>
         </div>
-  
+
         <!-- Filtro por rango de fechas -->
         <div>
           <label for="startDate">From:</label>
@@ -237,7 +239,7 @@ class Proyecto {
           <label for="endDate">To:</label>
           <input type="date" id="endDate" />
         </div>
-  
+
         <!-- Opciones de ordenación -->
         <div>
           <label for="sortOrder">Sort by:</label>
@@ -248,14 +250,11 @@ class Proyecto {
             <option value="dateDesc">Date (Newest First)</option>
           </select>
         </div>
-        
-          <!-- Botón para exportar a Excel -->
-      <button id="exportToExcel">Export to Excel</button>
-    
-        
+
+        <!-- Botón para exportar a Excel -->
+        <button id="exportToExcel">Export to Excel</button>
       </div>
-    
-      
+
       <!-- Tabla -->
       <table id="debtTable" class="styled-table">
         <thead>
@@ -271,7 +270,74 @@ class Proyecto {
         <tbody id="debtBody"></tbody>
       </table>
     `;
-  }
+
+    const debtBody = document.getElementById("debtBody");
+    const statusFilter = document.getElementById("statusFilter");
+    const startDate = document.getElementById("startDate");
+    const endDate = document.getElementById("endDate");
+    const sortOrder = document.getElementById("sortOrder");
+
+    const renderTable = (filteredDebts) => {
+        debtBody.innerHTML = ""; // Limpiar tabla
+
+        filteredDebts.forEach((debt, index) => {
+            debtBody.innerHTML += `
+              <tr>
+                <td>${index + 1}</td>
+                <td>${debt.name}</td>
+                <td>$${debt.amount}</td>
+                <td>${debt.dueDate}</td>
+                <td>${debt.description}</td>
+                <td>${debt.estado}</td>
+              </tr>
+            `;
+        });
+    };
+
+    const filterAndSortDebts = () => {
+        let filteredDebts = this.debts;
+
+        // Filtro por estado
+        const statusValue = statusFilter.value;
+        if (statusValue !== "all") {
+            filteredDebts = filteredDebts.filter(debt => debt.estado === statusValue);
+        }
+
+        // Filtro por rango de fechas
+        const start = new Date(startDate.value);
+        const end = new Date(endDate.value);
+        if (startDate.value) {
+            filteredDebts = filteredDebts.filter(debt => new Date(debt.dueDate) >= start);
+        }
+        if (endDate.value) {
+            filteredDebts = filteredDebts.filter(debt => new Date(debt.dueDate) <= end);
+        }
+
+        // Ordenar por criterio seleccionado
+        const orderValue = sortOrder.value;
+        if (orderValue === "amountAsc") {
+            filteredDebts.sort((a, b) => a.amount - b.amount);
+        } else if (orderValue === "amountDesc") {
+            filteredDebts.sort((a, b) => b.amount - a.amount);
+        } else if (orderValue === "dateAsc") {
+            filteredDebts.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+        } else if (orderValue === "dateDesc") {
+            filteredDebts.sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
+        }
+
+        renderTable(filteredDebts);
+    };
+
+    // Agregar eventos para filtros y ordenación
+    statusFilter.addEventListener("change", filterAndSortDebts);
+    startDate.addEventListener("change", filterAndSortDebts);
+    endDate.addEventListener("change", filterAndSortDebts);
+    sortOrder.addEventListener("change", filterAndSortDebts);
+
+    // Render inicial con todas las deudas
+    filterAndSortDebts();
+}
+
   
   renderNotifications() {
     const today = new Date();
