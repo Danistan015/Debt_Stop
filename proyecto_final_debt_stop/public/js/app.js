@@ -240,6 +240,9 @@ class Proyecto {
         <option value="dateDesc">Date (Newest First)</option>
       </select>
   
+      <!-- Botón para exportar a Excel -->
+      <button id="exportToExcel" style="margin-top: 20px;">Export to Excel</button>
+  
       <table id="debtTable" class="styled-table">
         <thead>
           <tr>
@@ -260,6 +263,7 @@ class Proyecto {
     const startDateInput = document.getElementById("startDate");
     const endDateInput = document.getElementById("endDate");
     const sortOrderSelect = document.getElementById("sortOrder");
+    const exportToExcelButton = document.getElementById("exportToExcel");
   
     // Función para renderizar las deudas filtradas
     const renderFilteredDebts = () => {
@@ -317,7 +321,22 @@ class Proyecto {
     startDateInput.addEventListener("change", renderFilteredDebts);
     endDateInput.addEventListener("change", renderFilteredDebts);
     sortOrderSelect.addEventListener("change", renderFilteredDebts);
+  
+    // Función para exportar la tabla a Excel
+    exportToExcelButton.addEventListener("click", () => {
+      // Primero renderizamos las deudas filtradas
+      renderFilteredDebts();
+  
+      // Convertir la tabla a hoja de Excel usando SheetJS
+      const ws = XLSX.utils.table_to_sheet(document.getElementById('debtTable'));
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Debt History');
+      
+      // Guardar el archivo Excel
+      XLSX.writeFile(wb, 'debt_history.xlsx');
+    });
   }
+  
   
   
   
@@ -373,8 +392,32 @@ class Proyecto {
           <p style="font-size: 24px;">$${totalPending.toFixed(2)}</p>
         </div>
       </div>
+  
+      <!-- Botón para exportar a Excel -->
+      <button id="exportToExcel2">Export to Excel</button>
     `;
-  };
+  
+    // Añadir evento al botón de exportación
+    document.getElementById('exportButton').addEventListener('click', () => {
+      this.exportBalanceToExcel(totalPaid, totalPending);
+    });
+  }
+  
+  exportBalanceToExcel(totalPaid, totalPending) {
+    const ws_data = [
+      ["Balance Type", "Amount"],
+      ["Total Paid", totalPaid.toFixed(2)],
+      ["Total Pending", totalPending.toFixed(2)]
+    ];
+  
+    const ws = XLSX.utils.aoa_to_sheet(ws_data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Total Balance");
+  
+    // Exportar a un archivo Excel
+    XLSX.writeFile(wb, "Total_Balance_Report.xlsx");
+  }
+  
   
   renderMyGoals() {
     // Inicializar HTML con el formulario para agregar metas

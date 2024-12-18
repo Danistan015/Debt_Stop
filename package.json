@@ -6,7 +6,8 @@
     "express": "^4.21.2",
     "node-fetch": "^2.7.0",
     "socket.io": "^4.8.1",
-    "typo-js": "^1.2.4"
+    "typo-js": "^1.2.4",
+    "xlsx": "^0.18.5"
   },
   "name": "debt_stop",
   "version": "1.0.0",
