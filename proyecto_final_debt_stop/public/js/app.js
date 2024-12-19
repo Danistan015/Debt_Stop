@@ -466,6 +466,7 @@ class Proyecto {
         <thead>
           <tr>
             <th>#</th>
+            <th>Goal</th>
           </tr>
         </thead>
         <tbody id="goalBody"></tbody>
