@@ -431,7 +431,7 @@ class Proyecto {
     `;
   
     // Añadir evento al botón de exportación
-    document.getElementById('exportButton').addEventListener('click', () => {
+    document.getElementById('exportToExcel2').addEventListener('click', () => {
       this.exportBalanceToExcel(totalPaid, totalPending);
     });
   }
