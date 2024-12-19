@@ -31,7 +31,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 10; /* Para que esté por encima de otros elementos */
+    z-index: 10;
     height: auto; 
 }
 

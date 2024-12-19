@@ -441,23 +441,23 @@ form button:hover {
 #filtersContainer {
   display: flex; 
   flex-wrap: wrap; 
-  gap: 15px; /* Espacio entre los elementos */
+  gap: 15px;
   align-items: center; 
-  justify-content: space-between; /* Asegura que los elementos se distribuyan adecuadamente */
+  justify-content: space-between;
   padding: 20px; 
   background-color: #fff; 
   border-radius: 10px; 
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 0 auto; /* Centra horizontalmente el contenedor */
-  max-width: 90%; /* Limita el ancho máximo */
+  margin: 0 auto;
+  max-width: 90%;
 }
 
 /* Estilos para los filtros individuales */
 #filtersContainer > div {
   display: flex;
-  flex-direction: column; /* Coloca la etiqueta encima del input o select */
-  min-width: 150px; /* Asegura un ancho mínimo para cada filtro */
-  flex: 1; /* Ajusta el tamaño de forma proporcional */
+  flex-direction: column; 
+  min-width: 150px;
+  flex: 1; 
 }
 
 
@@ -467,7 +467,7 @@ form button:hover {
 }
 /* Botón al pasar el ratón por encima */
 #exportToExcel:hover {
-  background-color: #0056b3; /* Azul más oscuro */
+  background-color: #0056b3; 
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -494,14 +494,14 @@ label {
   margin-bottom: 5px;
 }
 
-/* Ajustes adicionales para el contenedor */
+/* Ajustes adicionales para el contenedor para cuando la pantalla es de 768px */
 @media (max-width: 768px) {
   #filtersContainer {
-    flex-direction: column; /* Cambia a diseño vertical en pantallas pequeñas */
+    flex-direction: column; 
   }
 
   #exportToExcel {
-    width: 100%; /* Ocupa todo el ancho */
+    width: 100%; 
     text-align: center;
     margin-left: 45%;
   }

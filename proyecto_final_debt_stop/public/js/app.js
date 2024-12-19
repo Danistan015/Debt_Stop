@@ -7,23 +7,28 @@ const chatMessages = document.getElementById("chat-messages");
 
 // Mostrar y ocultar el chat al hacer clic en el ícono flotante
 floatingBtn.addEventListener("click", () => {
-  chatContainer.style.display =
-    chatContainer.style.display === "none" || chatContainer.style.display === ""
-      ? "block"
-      : "none";
-  userMessageInput.focus(); 
+  if (chatContainer.style.display === "none" || chatContainer.style.display === "") {
+    chatContainer.style.display = "block";
+    userMessageInput.focus();
+  } else {
+    chatContainer.style.display = "none";
+  }
 });
 
-// Función para mostrar el mensaje del usuario
+
+//mostramos el mensaje del usuario
 function addUserMessage(message) {
+  //creación del div con la clase "user-massage"
   const userMessage = document.createElement("div");
-  userMessage.classList.add("user-message");
+  userMessage.classList.add("user-message"); 
+  //le damos el mensaje como contenido al div
   userMessage.textContent = message;
+  //agregamos el div para que aparezca el emnsaje en la interfaz
   chatMessages.appendChild(userMessage);
   chatMessages.scrollTop = chatMessages.scrollHeight; // Desplazar al último mensaje
 }
 
-// Función para mostrar la respuesta del bot
+// mostramos el mensaje del bot
 function addBotReply(message) {
   const botReply = document.createElement("div");
   botReply.classList.add("bot-reply");
@@ -32,7 +37,7 @@ function addBotReply(message) {
   chatMessages.scrollTop = chatMessages.scrollHeight; // Desplazar al último mensaje
 }
 
-// Lógica para enviar el mensaje cuando el usuario hace clic en "Enviar"
+// Enviamos el mensaje cuando el usuario da clic en el botón "enviar"
 sendMessageButton.addEventListener("click", function () {
   const userMessage = userMessageInput.value.trim();
   if (userMessage) {
@@ -60,7 +65,7 @@ sendMessageButton.addEventListener("click", function () {
   }
 });
 
-// Opcional: Permite enviar el mensaje presionando Enter
+//Envía el mensaje al servidor presionando enter
 userMessageInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     sendMessageButton.click();
@@ -150,9 +155,10 @@ class Proyecto {
     const addDebtsBtn = document.getElementById("addDebtsBtn");
     const debtForm = document.getElementById("debtForm");
     const debtBody = document.getElementById("debtBody");
-  
+
+   /*PARA LA TABLA*/
     const renderTable = () => {
-      debtBody.innerHTML = ""; // Limpiar la tabla
+      debtBody.innerHTML = "";
       this.debts.forEach((debt, index) => {
         if (debt.estado === "Pending") {
           debtBody.innerHTML += `
@@ -171,11 +177,11 @@ class Proyecto {
         }
       });
   
-      // Event listeners para botones de acciones
+      // Para el botón
       document.querySelectorAll("#markPaid").forEach((button) => {
         button.addEventListener("click", (e) => {
           const index = e.target.dataset.index;
-          this.debts[index].estado = "Paid"; // Cambiar el estado
+          this.debts[index].estado = "Paid"; // Cambiar estado
           updateLocalStorage();
           renderTable();
         });
@@ -186,12 +192,16 @@ class Proyecto {
       localStorage.setItem("debts", JSON.stringify(this.debts));
     };
   
-    // Evento para mostrar/ocultar el formulario
+    // mostrar/ocultar el formulario
     addDebtsBtn.addEventListener("click", () => {
-      formSection.style.display = formSection.style.display === "none" ? "block" : "none";
-    });
+      if (formSection.style.display === "none" || formSection.style.display === "") {
+        formSection.style.display = "block";
+      } else {
+        formSection.style.display = "none";
+      }
+    });    
   
-    // Evento para guardar la deuda
+    // guardar la deuda
     debtForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const name = document.getElementById("name").value;
@@ -276,28 +286,31 @@ class Proyecto {
     const sortOrder = document.getElementById('sortOrder');
     const exportButton = document.getElementById('exportToExcel');
   
-    // Función para filtrar y mostrar la tabla
     const filterAndDisplayDebts = () => {
       let filteredDebts = this.debts;
   
-      // Filtro por estado
       const selectedStatus = statusFilter.value;
       if (selectedStatus !== 'all') {
         filteredDebts = filteredDebts.filter(debt => debt.estado === selectedStatus);
       }
   
-      // Filtro por fecha
-      const start = startDate.value ? new Date(startDate.value) : null;
-      const end = endDate.value ? new Date(endDate.value) : null;
-  
+      let start = null;
+      let end = null;
+
+      if (startDate.value) {
+        start = new Date(startDate.value);
+      }
+      if (endDate.value) {
+        end = new Date(endDate.value);
+      }
+
       if (start) {
         filteredDebts = filteredDebts.filter(debt => new Date(debt.dueDate) >= start);
       }
       if (end) {
         filteredDebts = filteredDebts.filter(debt => new Date(debt.dueDate) <= end);
       }
-  
-      // Ordenación
+
       const selectedSortOrder = sortOrder.value;
       if (selectedSortOrder === 'amountAsc') {
         filteredDebts.sort((a, b) => a.amount - b.amount);
@@ -309,30 +322,29 @@ class Proyecto {
         filteredDebts.sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
       }
   
-      // Actualiza la tabla
       const debtBody = document.getElementById('debtBody');
-      debtBody.innerHTML = filteredDebts.map((debt, index) => `
-        <tr>
-          <td>${index + 1}</td>
-          <td>${debt.name}</td>
-          <td>${debt.amount.toFixed(2)}</td>
-          <td>${debt.dueDate}</td>
-          <td>${debt.description}</td>
-          <td>${debt.estado}</td>
-        </tr>
-      `).join('');
+      debtBody.innerHTML = filteredDebts.map((debt, index) => {
+        return `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${debt.name}</td>
+            <td>${debt.amount}</td>
+            <td>${debt.dueDate}</td>
+            <td>${debt.description}</td>
+            <td>${debt.estado}</td>
+          </tr>
+        `;
+      }).join('');
+
     };
   
-    // Inicializa el filtro y la tabla
     filterAndDisplayDebts();
   
-    // Escucha cambios en los filtros
     statusFilter.addEventListener('change', filterAndDisplayDebts);
     startDate.addEventListener('change', filterAndDisplayDebts);
     endDate.addEventListener('change', filterAndDisplayDebts);
     sortOrder.addEventListener('change', filterAndDisplayDebts);
   
-    // Función para exportar los datos a Excel
     const exportToExcel = () => {
       const debtRows = Array.from(document.querySelectorAll('#debtTable tbody tr'));
       const data = [["#", "Name", "Amount", "Date", "Description", "Status"]];
@@ -347,11 +359,9 @@ class Proyecto {
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "History");
   
-      // Exportar a un archivo Excel
       XLSX.writeFile(wb, "Debt_History_Report.xlsx");
     };
   
-    // Añadir evento al botón de exportación
     exportButton.addEventListener('click', exportToExcel);
   }
   
@@ -359,30 +369,37 @@ class Proyecto {
   renderNotifications() {
     const today = new Date();
     const fiveDaysLater = new Date();
-    fiveDaysLater.setDate(today.getDate() + 5); // Calcula la fecha de 5 días más
+    fiveDaysLater.setDate(today.getDate() + 5); 
   
-    // Filtra las deudas pendientes que vencen desde hoy hasta los próximos 5 días
+    
     const upcomingDebts = this.debts.filter(debt => {
       const dueDate = new Date(debt.dueDate);
-      const isPending = debt.estado === "Pending"; // Asegura que solo se muestren deudas pendientes
+      const isPending = debt.estado === "Pending"; 
       return isPending && dueDate >= today && dueDate <= fiveDaysLater;
     });
   
-    // Genera el HTML para cada deuda pendiente que vence desde hoy hasta los próximos 5 días
+    /*GENERAR EL HTML*/
     this.app.innerHTML = `
-      <h1>Notifications</h1>
-      <div id="notification-container">
-        ${upcomingDebts.map(debt => {
-          const dueDate = new Date(debt.dueDate);
-          const daysLeft = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24)); // Calcula los días restantes
-          return `
-            <div class="notification" id="notificationDiv">
-              The debt "${debt.name}" is due in ${daysLeft === 0 ? "today" : daysLeft + " days"}.
-            </div>
-          `;
-        }).join('')}
-      </div>
-    `;
+  <h1>Notifications</h1>
+  <div id="notification-container">
+    ${upcomingDebts.map(debt => {
+      const dueDate = new Date(debt.dueDate);
+      const daysLeft = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+      let daysText = '';
+
+      if (daysLeft === 0) {
+        daysText = "today";
+      } else {
+        daysText = daysLeft + " days";
+      }
+
+      return `
+        <div class="notification" id="notificationDiv">
+          The debt "${debt.name}" is due in ${daysText}.
+        </div>
+      `;
+    }).join('')}
+  </div>`;
   };
   
   renderTotalBalance() {
@@ -459,12 +476,10 @@ class Proyecto {
     const goalForm = document.getElementById("goalForm");
     const goalBody = document.getElementById("goalBody");
     
-    // Cargar las metas desde localStorage o inicializar un arreglo vacío
     this.goals = JSON.parse(localStorage.getItem("goals")) || [];
   
-    // Función para renderizar la tabla con las metas
     const renderGoalsTable = () => {
-      goalBody.innerHTML = ""; // Limpiar la tabla
+      goalBody.innerHTML = "";
       this.goals.forEach((goal, index) => {
         goalBody.innerHTML += `
           <tr>
@@ -475,19 +490,18 @@ class Proyecto {
       });
     };
   
-    // Evento para manejar la sumisión del formulario y agregar una nueva meta
     goalForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const goal = document.getElementById("goal").value;
       if (goal) {
-        this.goals.push(goal); // Agregar la meta al arreglo
-        localStorage.setItem("goals", JSON.stringify(this.goals)); // Guardar en localStorage
-        renderGoalsTable(); // Volver a renderizar la tabla
-        goalForm.reset(); // Limpiar el formulario
+        this.goals.push(goal);
+        localStorage.setItem("goals", JSON.stringify(this.goals)); 
+        renderGoalsTable(); 
+        goalForm.reset(); 
       }
     });
   
-    renderGoalsTable(); // Renderizar las metas al cargar la página
+    renderGoalsTable(); 
   }
   
   renderAboutUs() {
