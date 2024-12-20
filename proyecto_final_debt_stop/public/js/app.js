@@ -15,20 +15,16 @@ floatingBtn.addEventListener("click", () => {
   }
 });
 
-
-//mostramos el mensaje del usuario
+// Mostramos el mensaje del usuario
 function addUserMessage(message) {
-  //creación del div con la clase "user-massage"
   const userMessage = document.createElement("div");
   userMessage.classList.add("user-message"); 
-  //le damos el mensaje como contenido al div
   userMessage.textContent = message;
-  //agregamos el div para que aparezca el emnsaje en la interfaz
   chatMessages.appendChild(userMessage);
   chatMessages.scrollTop = chatMessages.scrollHeight; // Desplazar al último mensaje
 }
 
-// mostramos el mensaje del bot
+// Mostramos el mensaje del bot
 function addBotReply(message) {
   const botReply = document.createElement("div");
   botReply.classList.add("bot-reply");
@@ -45,7 +41,7 @@ sendMessageButton.addEventListener("click", function () {
     addUserMessage(userMessage);
 
     // Envía el mensaje al servidor para obtener la respuesta del chatbot
-    fetch("http://localhost:3000/chat", {
+    fetch("https://debt-stop.vercel.app/chat", {  // Cambié la URL a tu dominio de Vercel
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +61,7 @@ sendMessageButton.addEventListener("click", function () {
   }
 });
 
-//Envía el mensaje al servidor presionando enter
+// Envía el mensaje al servidor presionando enter
 userMessageInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     sendMessageButton.click();
