@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;  // Usa el puerto de Vercel o 3000 en local
 
 // Middleware para parsear los datos en el cuerpo de la solicitud
 app.use(bodyParser.json());
@@ -16,7 +16,6 @@ app.use(express.static(path.join(__dirname, 'proyecto_final_debt_stop', 'public'
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'proyecto_final_debt_stop', 'public', 'views', 'menu.html'));
 });
-
 
 // Ruta para manejar las interacciones del chatbot
 app.post('/chat', (req, res) => {
@@ -40,7 +39,7 @@ function obtenerRespuestaGemini(prompt) {
     return Promise.resolve("Parece que algo no va bien. ¿Puedes contarme más sobre lo que te sucede?");
   }
 
-  const API_KEY = 'Tu api KEY';  // Asegúrate de poner tu clave de API correcta
+  const API_KEY = 'AIzaSyAudv2T3R9W2DQkIxpqY-5UkGLFFdJJEcE';  // Asegúrate de poner tu clave de API correcta
   const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
   // Hacer la solicitud a la API de Gemini
