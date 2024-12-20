@@ -14,6 +14,10 @@ app.use(express.static(path.join(__dirname, 'proyecto_final_debt_stop', 'public'
 
 // Cambia la ruta para servir 'menu.html'
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'proyecto_final_debt_stop', 'public', 'views', 'index.html'));
+});
+// Ruta que irá luego del login
+app.get('/menu', (req, res) => {
   res.sendFile(path.join(__dirname, 'proyecto_final_debt_stop', 'public', 'views', 'menu.html'));
 });
 
