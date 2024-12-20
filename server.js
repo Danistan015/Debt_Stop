@@ -43,8 +43,7 @@ function obtenerRespuestaGemini(prompt) {
     return Promise.resolve("Parece que algo no va bien. ¿Puedes contarme más sobre lo que te sucede?");
   }
 
-  const API_URL = 'https://debt-stop.vercel.app/chat';  // Cambia esta URL a la que te da Vercel
-  
+  const API_KEY = process.env.GEMINI_API_KEY;  
 
   const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
