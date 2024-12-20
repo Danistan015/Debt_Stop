@@ -43,7 +43,8 @@ function obtenerRespuestaGemini(prompt) {
     return Promise.resolve("Parece que algo no va bien. ¿Puedes contarme más sobre lo que te sucede?");
   }
 
-  const API_KEY = 'AIzaSyAudv2T3R9W2DQkIxpqY-5UkGLFFdJJEcE';  // Asegúrate de poner tu clave de API correcta
+  const API_KEY = process.env.GEMINI_API_KEY;  
+
   const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
   // Hacer la solicitud a la API de Gemini
