@@ -4,20 +4,19 @@ const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 
 const app = express();
-const port = process.env.PORT || 3000;  // Vercel usará el puerto asignado
+const port = process.env.PORT || 3000;  // Usa el puerto de Vercel o 3000 en local
 
 // Middleware para parsear los datos en el cuerpo de la solicitud
 app.use(bodyParser.json());
 
-// Servir archivos estáticos
+// Sirve los archivos estáticos desde la carpeta 'proyecto_final_debt_stop/public'
 app.use(express.static(path.join(__dirname, 'proyecto_final_debt_stop', 'public')));
 
-// Ruta para la página de inicio
+// Cambia la ruta para servir 'menu.html'
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'proyecto_final_debt_stop', 'public', 'views', 'index.html'));
 });
-
-// Ruta para el menú
+// Ruta que irá luego del login
 app.get('/menu', (req, res) => {
   res.sendFile(path.join(__dirname, 'proyecto_final_debt_stop', 'public', 'views', 'menu.html'));
 });
@@ -39,13 +38,16 @@ app.post('/chat', (req, res) => {
 
 // Función para interactuar con la API de Gemini y obtener una respuesta
 function obtenerRespuestaGemini(prompt) {
+  // Si el mensaje contiene una palabra clave problemática
   if (prompt.toLowerCase().includes("mal")) {
     return Promise.resolve("Parece que algo no va bien. ¿Puedes contarme más sobre lo que te sucede?");
   }
 
-  const API_KEY = 'AIzaSyAudv2T3R9W2DQkIxpqY-5UkGLFFdJJEcE';  // Sustituye con tu API Key de Gemini
+  const API_KEY = 'AIzaSyAudv2T3R9W2DQkIxpqY-5UkGLFFdJJEcE'; 
   const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
+
+  // Hacer la solicitud a la API de Gemini
   return fetch(URL, {
     method: 'POST',
     headers: {
@@ -65,6 +67,7 @@ function obtenerRespuestaGemini(prompt) {
       throw new Error('Hubo un problema al procesar tu solicitud');
     });
 }
+
 
 // Iniciar el servidor
 app.listen(port, () => {
