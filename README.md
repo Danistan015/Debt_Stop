@@ -1,160 +1,126 @@
-Debt Stop: Toma el Control de tus Finanzas
+# Debt Stop: Take Control of Your Finances
 
-1. Crear una API Key
+## Project Description
+Debt Stop is a user-friendly application designed to simplify personal debt management. It helps users track debts, record payments, and organize their finances with ease. Featuring an intuitive interface and local storage system, Debt Stop aims to empower users to take control of their financial health.
 
-Primero, necesitas generar una clave de API para acceder a los servicios de Google Generative AI. Sigue estos pasos para obtenerla:
+### Key Features
+- **User Registration and Login**: Secure user authentication.
+- **Active Debt Tracking**: View and manage active debts.
+- **Payment History**: Keep a detailed history of payments.
+- **Automatic Reminders**: Notifications to ensure timely payments.
+- **Debt Management**: Mark debts as paid and track balances.
+- **Savings Goals**: Set and monitor financial goals.
+- **Filtering and Sorting**: Organize debts by status, date, or amount.
+- **Chatbot Assistance**: Get financial advice from an integrated chatbot.
+- **Reports**: Generate detailed history and balance reports.
 
-Ve a la consola de Google Cloud: Google Cloud Console.
+---
 
-Crea un nuevo proyecto o selecciona uno existente.
+## Quick Start Guide
 
-Activa la API de Google Generative AI desde la biblioteca de APIs.
+### 1. Create an API Key
+To access Google Generative AI services, you need an API Key. Follow these steps:
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. Enable the **Google Generative AI API** from the API library.
+4. Generate an API Key in the **Credentials** section.
+5. Save the generated API Key for later use.
 
-Genera una clave de API desde la sección de credenciales.
+---
 
-Guarda la clave de API generada, ya que la necesitarás en el siguiente paso.
+### 2. Install Dependencies
+Run the following commands in your terminal:
 
-2. Manejar el Modelo
-
-
-
-3. Instalar Dependencias
-
-Ejecuta los siguientes comandos en tu terminal para instalar las dependencias necesarias:
-
-Para Google Generative AI
-
+#### Google Generative AI
+```bash
 npm install @google/generative-ai
+```
 
-4. Configura tu API Key como Variable de Entorno
-
-Crea un archivo .env en la raíz de tu proyecto (si aún no lo tienes).
-
-Agrega tu clave de API en el archivo .env en el siguiente formato:
-
-API_KEY=tu_clave_de_api_aquí
-
-Esto garantiza que tu clave de API no esté expuesta directamente en el código fuente.
-
-5. Instalar dotenv
-
-Para poder cargar las variables de entorno desde el archivo .env, instala el paquete dotenv:
-
+#### dotenv
+```bash
 npm install dotenv
+```
 
-6. Instalar Dependencias del Proyecto
-
-Asegúrate de haber instalado todas las dependencias necesarias para el proyecto. Si aún no lo has hecho, ejecuta:
-
-npm install
-
-Esto instalará las dependencias esenciales como Express, Socket.io y @google/generative-ai.
-
-7. Instalar CORS
-
-Si no tienes instalado el paquete cors, instálalo para permitir solicitudes entre diferentes orígenes (cross-origin requests):
-
+#### CORS
+```bash
 npm install cors
+```
 
-8. Instalar Node Fetch
-
-Instala la versión 2.x de node-fetch, que es necesaria para realizar solicitudes HTTP:
-
+#### Node Fetch
+```bash
 npm install node-fetch@2
+```
 
-9. Ejecutar el Servidor
+#### Project Dependencies
+Ensure you have all necessary project dependencies:
+```bash
+npm install
+```
+This will include essential packages like Express and Socket.io.
 
-Finalmente, asegúrate de estar en el directorio correcto y ejecuta el servidor:
+---
 
-node server.js
+### 3. Configure Your API Key
+1. Create a `.env` file in the root directory of your project.
+2. Add your API Key in the following format:
+   ```env
+   API_KEY=your_api_key_here
+   ```
+   This keeps your API Key secure and out of the source code.
 
-Resumen de Pasos
+---
 
-Crear la API Key en la consola de Google Cloud.
+### 4. Run the Server
+1. Navigate to the project directory.
+2. Start the server with:
+   ```bash
+   node server.js
+   ```
 
-Instalar las dependencias necesarias:
+---
 
-npm install @google/generative-ai dotenv cors node-fetch@2
+## Functional Requirements
 
-Configurar la API Key como variable de entorno en el archivo .env.
+| **ID**  | **Description**                                                                 |
+|---------|---------------------------------------------------------------------------------|
+| RF-1    | The user can log in.                                                           |
+| RF-2    | The user can register new debts.                                               |
+| RF-3    | The user can view the payment history.                                         |
+| RF-4    | The application displays payment reminders.                                   |
+| RF-5    | The user can mark a registered debt as paid.                                   |
+| RF-6    | The application automatically calculates the total balance of active debts.    |
+| RF-7    | The user can filter debts by status (pending or paid) and sort by date or amount. |
+| RF-8    | The application allows setting savings goals.                                  |
+| RF-9    | Chatbot provides financial advice.                                             |
+| RF-10   | The application allows generating reports of history and balances.            |
 
-Asegurarse de haber instalado las dependencias con npm install.
+---
 
-Ejecutar el servidor con node server.js.
+## Project Information
 
-Información General
+- **Project Name**: Debt Stop: Take Control of Your Finances
+- **Date**: 12/12/2024
+- **Team Members**:
+  - Daniela Soto
+  - Valeria Aristizabal
 
-Nombre del Proyecto: Debt Stop: toma el control de tus finanzas
+---
 
-Fecha: 12/12/2024
+## Installation Summary
+1. Create an API Key from Google Cloud.
+2. Install dependencies:
+   ```bash
+   npm install @google/generative-ai dotenv cors node-fetch@2
+   ```
+3. Configure the API Key in a `.env` file.
+4. Install all project dependencies:
+   ```bash
+   npm install
+   ```
+5. Start the server:
+   ```bash
+   node server.js
+   ```
 
-Nombres de los integrantes del equipo:
 
-Daniela Soto
-
-Valeria Aristizabal
-
-Descripción del Proyecto
-
-La aplicación tiene como propósito facilitar el manejo y seguimiento de deudas personales, ofreciendo una herramienta sencilla y práctica para registrar deudas, realizar pagos y organizar las finanzas de los usuarios.
-
-El alcance incluye funcionalidades como:
-
-Registro de usuarios
-
-Login
-
-Seguimiento de deudas activas
-
-Historial de pagos
-
-Recordatorios automáticos
-
-Todo esto está integrado con una interfaz intuitiva y un sistema de almacenamiento local.
-
-Requisitos Funcionales
-
-ID
-
-Descripción
-
-RF-1
-
-El usuario puede hacer login.
-
-RF-2
-
-El usuario puede registrar nuevas deudas.
-
-RF-3
-
-El usuario puede ver el historial de pagos.
-
-RF-4
-
-La aplicación muestra recordatorios de pago.
-
-RF-5
-
-El usuario puede marcar como pagada una deuda registrada.
-
-RF-6
-
-La aplicación calcula automáticamente el saldo total de las deudas activas.
-
-RF-7
-
-El usuario puede filtrar las deudas por estado (pendientes o pagadas) y ordenarlas por fecha o monto.
-
-RF-8
-
-La aplicación permite establecer metas de ahorro.
-
-RF-9
-
-Chatbot que da consejos.
-
-RF-10
-
-La aplicación permite generar reportes del historial y los balances.
 
